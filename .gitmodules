@@ -1,0 +1,3 @@
+[submodule "parser/grammar"]
+	path = parser/grammar
+	url = git@github.com:opengql/grammar.git
