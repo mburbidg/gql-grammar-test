@@ -1,1 +1,4 @@
-package grmtest
+package main
+
+func main() {
+}
