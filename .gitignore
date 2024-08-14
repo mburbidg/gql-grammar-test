@@ -26,3 +26,4 @@ go.work.sum
 
 grmtest
 .idea
+parser/gen
