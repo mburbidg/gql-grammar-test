@@ -1,12 +1,12 @@
 package parser
 
 import (
+	"errors"
 	"github.com/antlr4-go/antlr/v4"
-	"github.com/mburbidg/mygql/gql/parser/ast"
-	"github.com/mburbidg/mygql/gql/parser/gen"
+	"github.com/mburbidg/grmtest/parser/gen"
 )
 
-func Parse(src string) (*ast.GQLProgram, error) {
+func Parse(src string) error {
 	input := antlr.NewInputStream(src)
 	lexer := gen.NewGQLLexer(input)
 	stream := antlr.NewCommonTokenStream(lexer, 0)
@@ -14,11 +14,9 @@ func Parse(src string) (*ast.GQLProgram, error) {
 	errListener := newErrorListener()
 	p.AddErrorListener(errListener)
 	p.BuildParseTrees = true
-	tree := p.GqlProgram()
-	listener := NewListener()
-	antlr.ParseTreeWalkerDefault.Walk(listener, tree)
+	p.GqlProgram()
 	if len(errListener.errors) > 0 {
-		return nil, errListener.errors[0]
+		return errors.New(errListener.errors[0])
 	}
-	return listener.GQLProgram, nil
+	return nil
 }
