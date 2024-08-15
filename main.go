@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/mburbidg/grmtest/parser"
 	"io"
-	"log"
 	"os"
 	"path/filepath"
 )
@@ -24,23 +24,23 @@ func main() {
 func parseFile(filename string) {
 	file, err := os.Open(filename)
 	if err != nil {
-		log.Fatalf("Failed to open '%s': %v", filename, err)
+		fmt.Printf("Failed to open '%s': %v\n", filename, err)
 	}
 	b, err := io.ReadAll(file)
 	if err != nil {
-		log.Fatalf("Failed to read '%s': %v", filename, err)
+		fmt.Printf("Failed to read '%s': %v\n", filename, err)
 	}
 	err = parser.Parse(string(b))
 	if err != nil {
-		log.Printf("Syntax error in '%s': %v", filename, err)
+		fmt.Printf("Syntax error in '%s': %v\n", filename, err)
 	}
-	log.Printf("Success: %s", filename)
+	fmt.Printf("Success: %s\n", filename)
 }
 
 func parseDir(dirname string) {
 	files, err := os.ReadDir(dirname)
 	if err != nil {
-		log.Fatalf("Failed to read directory '%s': %v", dirname, err)
+		fmt.Printf("Failed to read directory '%s': %v\n", dirname, err)
 	}
 
 	for _, file := range files {
